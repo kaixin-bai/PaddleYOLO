@@ -55,7 +55,7 @@ class COCODataSet(DetDataset):
                  anno_path=None,
                  data_fields=['image'],
                  sample_num=-1,
-                 load_crowd=False,
+                 load_crowd=True,
                  allow_empty=False,
                  empty_ratio=1.,
                  repeat=1):
@@ -187,7 +187,8 @@ class COCODataSet(DetDataset):
                     gt_bbox[i, :] = box['clean_bbox']
                     is_crowd[i][0] = box['iscrowd']
                     # check RLE format 
-                    if 'segmentation' in box and box['iscrowd'] == 1:
+                    # "DEBUG" if 'segmentation' in box and box['iscrowd'] == 1:
+                    if 'segmentation' in box and box['iscrowd'] != 1 and box['iscrowd'] != 0:
                         gt_poly[i] = [[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]]
                     elif 'segmentation' in box and box['segmentation']:
                         if not np.array(
